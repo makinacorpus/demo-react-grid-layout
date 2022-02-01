@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 
 import {
   Button,
@@ -7,6 +7,11 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Typography,
 } from '@mui/material';
 import {
@@ -41,7 +46,11 @@ const ConfigForm = ({
   onDelete = () => null,
   onClone = () => null,
 }) => {
-  const handleEdit = () => {};
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
+  const handleEdit = () => {
+    setDialogOpen(true);
+  };
 
   return (
     <Card
@@ -91,6 +100,28 @@ const ConfigForm = ({
           )}
         </CardContent>
       </Wrapper>
+      <Dialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+      >
+        <DialogTitle>
+          Contenu du bloc
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            contenu
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button color="error" variant="outlined" onClick={() => setDialogOpen(false)}>
+            Annuler
+          </Button>
+
+          <Button color="success" variant="contained" onClick={() => setDialogOpen(false)}>
+            Enregistrer
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Card>
   );
 };
