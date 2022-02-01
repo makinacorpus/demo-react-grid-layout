@@ -62,8 +62,10 @@ const App = () => {
     return newSetup;
   });
 
+  const layout = Object.values(setup.blocks).map(a => ({ ...a, static: !editMode }));
+
   return (
-    <Container sx={{ border: '1px dotted orange', py: 2 }}>
+    <Container sx={{ py: 2 }}>
       <Box sx={{ px: 1, display: 'flex', justifyContent: 'flex-end' }}>
         {Boolean(editMode) && (
           <>
@@ -100,12 +102,13 @@ const App = () => {
 
       <GridLayout
         className="layout"
-        layout={Object.values(setup.blocks).map(a => ({ ...a, static: !editMode }))}
+        layout={layout}
         cols={3}
         rowHeight={100}
         onLayoutChange={handleLayoutChange}
+        draggableCancel=".MuiButtonGroup-root"
       >
-        {Object.values(setup.blocks).map(blockSetup => (
+        {layout.map(blockSetup => (
           <Box key={blockSetup.i} sx={blockSx}>
             <ConfigForm
               blockSetup={blockSetup}
