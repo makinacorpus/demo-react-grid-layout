@@ -101,6 +101,18 @@ const ConfigForm = ({
           )}
 
           {Boolean(edit) && (
+            <Box
+              sx={{
+                position: 'absolute',
+                inset: 0,
+                bgcolor: 'white',
+                opacity: 0.5,
+                cursor: 'move',
+              }}
+            />
+          )}
+
+          {Boolean(edit) && (
             <ButtonGroup sx={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'white' }}>
               <Button
                 onClick={() => onDelete(key)}
