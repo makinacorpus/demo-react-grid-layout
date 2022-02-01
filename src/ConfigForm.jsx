@@ -10,9 +10,13 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
 } from '@mui/material';
 import {
   HighlightOff,
@@ -36,6 +40,7 @@ const ConfigForm = ({
   edit,
   blockSetup: {
     i: key,
+    data = {},
     data: {
       lien = '#',
       picture,
@@ -45,11 +50,29 @@ const ConfigForm = ({
   } = { data: {} },
   onDelete = () => null,
   onClone = () => null,
+  onSave = () => null,
 }) => {
   const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [newData, setNewData] = React.useState(data);
 
   const handleEdit = () => {
     setDialogOpen(true);
+  };
+
+  const handlePictureChange = event => {
+    setNewData(prevData => ({ ...prevData, picture: event.target.value }));
+  };
+  const handleLinkChange = event => {
+    setNewData(prevData => ({ ...prevData, lien: event.target.value }));
+  };
+
+  const handleDialogClose = shouldSave => () => {
+    if (shouldSave) {
+      onSave(key, newData);
+    }
+
+    setNewData(data);
+    setDialogOpen(false);
   };
 
   return (
@@ -62,7 +85,7 @@ const ConfigForm = ({
         display: 'flex',
       }}
     >
-      <Wrapper edit={edit} href={lien} target="_blank">
+      <Wrapper edit={edit} href={lien}>
         <CardContent>
           <Typography gutterBottom variant="h4" component="h2">
             {titre}
@@ -108,16 +131,52 @@ const ConfigForm = ({
           Contenu du bloc
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            contenu
-          </DialogContentText>
+          <FormControl fullWidth sx={{ mt: 1 }}>
+            <InputLabel id="picture-select-label">Image</InputLabel>
+            <Select
+              labelId="picture-select-label"
+              id="picture-select"
+              defaultValue={newData.picture}
+              value={newData.picture}
+              label="Image"
+              onChange={handlePictureChange}
+            >
+              {Object.keys([...Array(7)]).map(i => Number(i)).map(i => (
+                <MenuItem key={i} value={`/pic-${i + 1}.png`}>
+                  <Box
+                    sx={{
+                      width: 50,
+                      height: 50,
+                      mr: 1,
+                      backgroundImage: `url(/pic-${i + 1}.png)`,
+                      backgroundPosition: 'center center',
+                      backgroundSize: 'cover',
+                      display: 'inline-block',
+                      verticalAlign: 'middle',
+                    }}
+                  />
+                  {`/pic-${i + 1}.png`}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <TextField
+            id="outlined-basic"
+            label="Adresse du lien"
+            variant="outlined"
+            value={newData.lien}
+            onChange={handleLinkChange}
+            sx={{ mt: 2 }}
+            fullWidth
+          />
         </DialogContent>
         <DialogActions>
-          <Button color="error" variant="outlined" onClick={() => setDialogOpen(false)}>
+          <Button color="error" variant="outlined" onClick={handleDialogClose(false)}>
             Annuler
           </Button>
 
-          <Button color="success" variant="contained" onClick={() => setDialogOpen(false)}>
+          <Button color="success" variant="contained" onClick={handleDialogClose(true)}>
             Enregistrer
           </Button>
         </DialogActions>

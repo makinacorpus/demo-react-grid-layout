@@ -59,6 +59,20 @@ const App = () => {
     };
   });
 
+  const updateBlock = (blockId, newData) => {
+    setSetup(prevSetup => {
+      const newSetup = JSON.parse(JSON.stringify(prevSetup));
+      newSetup.blocks[blockId] = {
+        ...prevSetup.blocks[blockId],
+        data: {
+          ...prevSetup.blocks[blockId].data,
+          ...newData,
+        },
+      };
+      return newSetup;
+    });
+  };
+
   const removeBlock = key => setSetup(prevSetup => {
     const newSetup = JSON.parse(JSON.stringify(prevSetup));
     delete newSetup.blocks[key];
@@ -118,6 +132,7 @@ const App = () => {
               edit={editMode}
               onDelete={removeBlock}
               onClone={addBlock}
+              onSave={updateBlock}
             />
           </Box>
         ))}
