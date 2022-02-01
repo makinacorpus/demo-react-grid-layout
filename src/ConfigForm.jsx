@@ -24,6 +24,8 @@ import {
   Edit,
 } from '@mui/icons-material';
 
+import pictures from './pictures.json';
+
 const Wrapper = ({ edit, href, ...props }) => {
   if (edit) {
     return (
@@ -84,6 +86,7 @@ const ConfigForm = ({
         backgroundSize: 'cover',
         display: 'flex',
       }}
+      elevation={5}
     >
       <Wrapper edit={edit} href={lien}>
         <CardContent>
@@ -141,21 +144,21 @@ const ConfigForm = ({
               label="Image"
               onChange={handlePictureChange}
             >
-              {Object.keys([...Array(7)]).map(i => Number(i)).map(i => (
-                <MenuItem key={i} value={`/pic-${i + 1}.png`}>
+              {pictures.map(({ filename = '', title = '' }) => (
+                <MenuItem key={filename} value={filename}>
                   <Box
                     sx={{
                       width: 50,
                       height: 50,
                       mr: 1,
-                      backgroundImage: `url(/pic-${i + 1}.png)`,
+                      backgroundImage: `url(${filename})`,
                       backgroundPosition: 'center center',
                       backgroundSize: 'cover',
                       display: 'inline-block',
                       verticalAlign: 'middle',
                     }}
                   />
-                  {`/pic-${i + 1}.png`}
+                  {title}
                 </MenuItem>
               ))}
             </Select>
