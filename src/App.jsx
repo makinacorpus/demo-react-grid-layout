@@ -12,15 +12,17 @@ import ReactGridLayout, { WidthProvider } from 'react-grid-layout';
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
+
 import ConfigForm from './ConfigForm';
 import defaultSetup from './default-setup';
+import { getFromLS, saveToLS } from './local-storage';
 
 const GridLayout = WidthProvider(ReactGridLayout);
 
 const App = () => {
   const [editMode, setEditMode] = React.useState(false);
 
-  const [setup, setSetup] = useState(defaultSetup);
+  const [setup, setSetup] = useState(getFromLS('setup') || defaultSetup);
 
   const blockSx = {
     background: '#fafafa',
@@ -28,6 +30,7 @@ const App = () => {
   };
 
   const handleLayoutChange = layout => {
+    saveToLS('setup', setup);
     setSetup(prevSetup => ({
       ...prevSetup,
       blocks: layout.reduce((acc, curr) => ({
