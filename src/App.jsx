@@ -113,7 +113,7 @@ const App = () => {
           endIcon={editMode ? <DoneIcon /> : <EditIcon />}
           sx={{ textTransform: 'none', mx: 0.5 }}
         >
-          {!editMode ? 'Éditer' : 'Terminer'}
+          {!editMode ? 'Modifier' : 'Terminer'}
         </Button>
       </Box>
 
