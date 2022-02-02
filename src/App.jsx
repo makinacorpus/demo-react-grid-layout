@@ -93,7 +93,7 @@ const App = () => {
               color="error"
               sx={{ textTransform: 'none', mx: 0.5, marginRight: 'auto' }}
             >
-              Réinitialiser
+              Grille par défaut
             </Button>
             <Button
               onClick={addBlock}

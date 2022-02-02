@@ -25,6 +25,7 @@ import {
 } from '@mui/icons-material';
 
 import pictures from './pictures.json';
+import OtherControls from './OtherControls';
 
 const Wrapper = ({ edit, href, ...props }) => {
   if (edit) {
@@ -141,12 +142,13 @@ const ConfigForm = ({
       <Dialog
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
+        fullWidth
       >
         <DialogTitle>
           Contenu du bloc
         </DialogTitle>
         <DialogContent>
-          <FormControl fullWidth sx={{ mt: 1 }}>
+          <FormControl fullWidth sx={{ mt: 1 }} size="small">
             <InputLabel id="picture-select-label">Image</InputLabel>
             <Select
               labelId="picture-select-label"
@@ -184,7 +186,10 @@ const ConfigForm = ({
             onChange={handleLinkChange}
             sx={{ mt: 2 }}
             fullWidth
+            size="small"
           />
+
+          <OtherControls />
         </DialogContent>
         <DialogActions>
           <Button color="error" variant="outlined" onClick={handleDialogClose(false)}>
