@@ -121,7 +121,7 @@ const App = () => {
         className="layout"
         layout={layout}
         cols={3}
-        rowHeight={180}
+        rowHeight={120}
         onLayoutChange={handleLayoutChange}
         draggableCancel=".MuiButtonGroup-root"
       >
